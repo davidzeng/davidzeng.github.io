@@ -13,7 +13,7 @@
     jQuery(document).ready(function($) {
         $('body').terminal(function(command, term) {
             if (command == 'play') {
-                $.get("http://127.0.0.1:5000/", function( data, status ) {
+                $.get("https://morning-beyond-6767.herokuapp.com/", function( data, status ) {
                     alert(data.name);
                 }, dataType = "json"
             )}
