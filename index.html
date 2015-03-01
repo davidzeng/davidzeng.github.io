@@ -2,26 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>JSON-RPC Demo for JQuery Terminal Emulator</title>
-    <meta name="author" content="Jakub Jankiewicz - jcubic&#64;onet.pl"/>
-    <meta name="Description" content="Demonstration for JQuery Terminal Emulator using call automaticly JSON-RPC service (in php) with authentication."/>
+    <title>DZ's Website</title>
     <script src="js/jquery-1.7.1.min.js"></script>
     <script src="js/jquery.mousewheel-min.js"></script>
-    <script src="js/jquery.terminal-min.js"></script>
+    <script src="js/jquery.terminal-0.8.8.js"></script>
     <link href="css/jquery.terminal.css" rel="stylesheet"/>
     <script>
+    var path_mapping;
+    var get_paths = function($path) {
+        $.get("http://localhost:5000" + $path, function( data, status ) {
+                path_mapping = data.paths
+                $("#main").text(JSON.stringify(path_mapping));
+        }, dataType = "json")
+    }
     jQuery(document).ready(function($) {
         $('body').terminal(function(command, term) {
-            if (command == 'play') {
-                $.get("https://morning-beyond-6767.herokuapp.com/", function( data, status ) {
-                    alert(data.name);
-                }, dataType = "json"
-            )}
+            if (command in path_mapping) {
+                get_paths(path_mapping[command]);
+            }
         }, {
-            greetings: "Hi! I'm David."
+            greetings: "Hi! I'm David.",
+            onInit: get_paths("/")
         });
     });
     </script>
   </head>
 <body>
+    <div id="main"></div>
 </body>
