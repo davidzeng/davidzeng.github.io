@@ -9,8 +9,14 @@
     <link href="css/jquery.terminal.css" rel="stylesheet"/>
     <script>
     var path_mapping;
+    var host;
+    if (window.location.hostname == '') {
+        host = "http://localhost:5000"
+    } else {
+        host = "https://morning-beyond-6767.herokuapp.com"
+    }
     var get_paths = function($path) {
-        $.get("http://localhost:5000" + $path, function( data, status ) {
+        $.get(host + $path, function( data, status ) {
                 path_mapping = data.paths
                 $("#main").text(JSON.stringify(path_mapping));
         }, dataType = "json")
