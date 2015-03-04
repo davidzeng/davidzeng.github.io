@@ -18,7 +18,13 @@
     var get_paths = function($path) {
         $.get(host + $path, function( data, status ) {
             path_mapping = data.paths
-            $("#options").html("<pre>" + JSON.stringify(path_mapping, null, 2) + "</pre>");
+            // make a copy of the mapping object & change display options
+            var display_mapping = jQuery.extend(true, {}, path_mapping);
+            for (var key in display_mapping) {
+                if (display_mapping.hasOwnProperty(key))
+                    display_mapping[key] = display_mapping[key]["text"]
+            }
+            $("#options").html("<pre>" + JSON.stringify(display_mapping, null, 2) + "</pre>");
         }, dataType = "json")
     }
     jQuery(document).ready(function($) {
