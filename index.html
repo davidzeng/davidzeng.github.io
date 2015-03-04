@@ -24,7 +24,16 @@
                 if (display_mapping.hasOwnProperty(key))
                     display_mapping[key] = display_mapping[key]["text"]
             }
+            // re-display the information shown on page
             $("#options").html("<pre>" + JSON.stringify(display_mapping, null, 2) + "</pre>");
+            $("#text").html(data.page_text);
+            if (!jQuery.isEmptyObject(data.page_json)) // don't show empty dictionary
+                $("#json").html("<pre>" + JSON.stringify(data.page_json, null, 2) + "</pre>");
+            else $("#json").html("");
+
+            if (data.page_text !== "" && jQuery.isEmptyObject(data.page_json)) {
+                $("#json").html("<br/>"); // add a newline between 2 lines of text
+            }
         }, dataType = "json")
     }
     jQuery(document).ready(function($) {
@@ -40,7 +49,9 @@
     </script>
   </head>
 <body>
-    <div id="greeting"> Hi! Welcome to my site! Type one of the options to learn more about me.</div>
-    <div id="main"></div>
+    <div id="greeting"> Hi! Welcome to my site!</div> <br/>
+    <div id="text"></div>
+    <div id="json"></div>
+    <div>Please type one of the options to navigate through the site.</div>
     <div id="options">Please wait for a bit while my heroku instance wakes up...</div>
 </body>
