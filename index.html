@@ -41,6 +41,7 @@
             if (command in path_mapping) {
                 get_paths(path_mapping[command]["path"]);
             }
+            term.clear();
         }, {
             greetings: false,
             onInit: get_paths("/home")
