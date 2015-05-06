@@ -15,6 +15,9 @@
     } else {
         host = "https://morning-beyond-6767.herokuapp.com"
     }
+    var codify_JSON = function($str) {
+        return "<pre>" + JSON.stringify($str, null, 2).replace(/\"/g, "").replace(/([.!?])\,/g, "$1<br/>") + "</pre>"
+    }
     var get_paths = function($path) {
         $.get(host + $path, function( data, status ) {
             path_mapping = data.paths
@@ -26,10 +29,10 @@
             }
             // re-display the information shown on page
             $("#heading").html(data.page_heading + "<br/><br/>");
-            $("#options").html("<pre>" + JSON.stringify(display_mapping, null, 2).replace(/\"/g, "") + "</pre>");
+            $("#options").html(codify_JSON(display_mapping));
             $("#text").html(data.page_text);
             if (!jQuery.isEmptyObject(data.page_json)) // don't show empty dictionary
-                $("#json").html("<pre>" + JSON.stringify(data.page_json, null, 2).replace(/\"/g, "") + "</pre>");
+                $("#json").html(codify_JSON(data.page_json));
             else $("#json").html("");
 
             if (data.page_text !== "" && jQuery.isEmptyObject(data.page_json)) {
