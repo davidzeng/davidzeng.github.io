@@ -25,6 +25,7 @@
                     display_mapping[key] = display_mapping[key]["text"]
             }
             // re-display the information shown on page
+            $("#heading").html(data.page_heading + "<br/><br/>");
             $("#options").html("<pre>" + JSON.stringify(display_mapping, null, 2) + "</pre>");
             $("#text").html(data.page_text);
             if (!jQuery.isEmptyObject(data.page_json)) // don't show empty dictionary
@@ -50,9 +51,10 @@
     </script>
   </head>
 <body>
-    <div id="greeting"> Hi! Welcome to the website of David Zeng!</div> <br/>
+    <div id="greeting" style="color:#2438A7"> Hi! Welcome to the website of David Zeng!</div> <br/>
+    <div id="heading" style="text-decoration: underline;"></div>
     <div id="text"></div>
     <div id="json"></div>
-    <div>Please type one of the options to navigate through the site.</div>
+    <div style="color:#EFAD17"><br/><br/>Please type one of the options to navigate through the site.</div>
     <div id="options">Please wait for a bit while my heroku instance wakes up...</div>
 </body>
