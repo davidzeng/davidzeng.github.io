@@ -26,10 +26,10 @@
             }
             // re-display the information shown on page
             $("#heading").html(data.page_heading + "<br/><br/>");
-            $("#options").html("<pre>" + JSON.stringify(display_mapping, null, 2) + "</pre>");
+            $("#options").html("<pre>" + JSON.stringify(display_mapping, null, 2).replace(/\"/g, "") + "</pre>");
             $("#text").html(data.page_text);
             if (!jQuery.isEmptyObject(data.page_json)) // don't show empty dictionary
-                $("#json").html("<pre>" + JSON.stringify(data.page_json, null, 2) + "</pre>");
+                $("#json").html("<pre>" + JSON.stringify(data.page_json, null, 2).replace(/\"/g, "") + "</pre>");
             else $("#json").html("");
 
             if (data.page_text !== "" && jQuery.isEmptyObject(data.page_json)) {
@@ -39,13 +39,17 @@
     }
     jQuery(document).ready(function($) {
         $('body').terminal(function(command, term) {
+            command = command.replace(/\s/g, "");
             if (command in path_mapping) {
                 get_paths(path_mapping[command]["path"]);
             }
             term.clear();
         }, {
             greetings: false,
-            onInit: get_paths("/home")
+            onInit: get_paths("/home"),
+            completion: function(term, string, callback) {
+                callback(Object.keys(path_mapping));
+            }
         });
     });
     </script>
@@ -55,6 +59,6 @@
     <div id="heading" style="text-decoration: underline;"></div>
     <div id="text"></div>
     <div id="json"></div>
-    <div style="color:#EFAD17"><br/><br/>Please type one of the options to navigate through the site.</div>
+    <div style="color:#EFAD17"><br/><br/>Please type one of the options to navigate through the site. You can autocomplete with the TAB button.</div>
     <div id="options">Please wait for a bit while my heroku instance wakes up...</div>
 </body>
