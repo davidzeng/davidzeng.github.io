@@ -16,7 +16,7 @@
         host = "https://morning-beyond-6767.herokuapp.com"
     }
     var codify_JSON = function($str) {
-        return "<pre>" + JSON.stringify($str, null, 2).replace(/\"/g, "").replace(/([.!?])\,/g, "$1<br/>") + "</pre>"
+        return "<pre>" + JSON.stringify($str, null, 2).replace(/\"/g, "").replace(/([.!?\]])\,/g, "$1<br/>") + "</pre>"
     }
     var get_paths = function($path) {
         $.get(host + $path, function( data, status ) {
